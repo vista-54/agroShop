@@ -25,6 +25,8 @@ class Product extends \yii\db\ActiveRecord
      */
     public $imageFile;
     public $dir;
+    public $totalSum;
+    public $totalCount;
     /**
      * @inheritdoc
      */
@@ -40,11 +42,11 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
 
-            [['user_id', 'pr_name', 'pr_sum', 'pr_price','image'], 'required'],
+            [['user_id', 'pr_name', 'pr_sum', 'pr_price'], 'required'],
             [['user_id', 'pr_sum'], 'integer'],
             [['pr_price'], 'number'],
             [['pr_name'], 'string', 'max' => 50],
-//            [['imageFile'], 'file', 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'extensions' => 'png, jpg'],
 //            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
 //            [['image'], 'string', 'max' => 200]
            /* array('image, string', 'max'=>255),

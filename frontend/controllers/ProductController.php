@@ -56,12 +56,46 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionBuyProduct($id)
-{
-    return $this->render('buyProduct', [
-        'model' => $this->findModel($id),
-    ]);
-}
+    public function actionEndBuy($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('endBuy', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionBuyProduct($id = null)
+    {
+
+        $model = $this->findModel($id);
+//    $startSum=$model->pr_sum;
+        $sum = Yii::$app->request->post()['Product']["pr_sum"];
+        $tcount = Yii::$app->request->post()['Product']['totalCount'];
+        $model->totalCount = $tcount;
+        if ($sum === '0') {
+            $model->delete();
+            return $this->redirect(['end-buy', 'id' => $model->id], [
+                'model' => $this->findModel($id),
+//                'sum'=>$model->totalCount,
+            ]);
+        }
+//    $model->pr_sum=$startSum-$sum;
+//        Yii::$app->request->post()['Product']["pr_sum"]=$startSum-$sum;
+//    var_dump($sum);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['end-buy', 'id' => $model->id, 'count' => $tcount], [
+                'model' => $this->findModel($id),
+
+            ]);
+
+        } else {
+            return $this->render('buyProduct', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+
+    }
 
     /**
      * Creates a new Product model.
@@ -86,7 +120,7 @@ class ProductController extends Controller
             }
         }
 
-        $model->image=$model->dir;
+        $model->image = $model->dir;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
 //            if ($model->upload()) {
@@ -103,18 +137,19 @@ class ProductController extends Controller
         }
     }
     /*Покупаем*/
-    public function actionBuy($id)
-    {
-        $model = $this->findModel($id);
+    /* public function actionBuy($id)
+     {
+         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
+         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+             return $this->redirect(['view', 'id' => $model->id]);
+         } else {
+             return $this->render('update', [
+                 'model' => $model,
+             ]);
+         }
+
+     }*/
     /**
      * Updates an existing Product model.
      * If update is successful, the browser will be redirected to the 'view' page.

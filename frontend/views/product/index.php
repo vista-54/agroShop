@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //             'image:image',
             // Второй вариант. Формирование изображения и его параметров через анонимную функцию
             [
-                'label' => 'Картинка',
+                'label' => 'Изображение',
                 'format' => 'raw',
                 'value' => function($data){
                     return Html::img($data->image,[
