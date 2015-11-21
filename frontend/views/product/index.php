@@ -37,11 +37,19 @@ $this->params['breadcrumbs'][] = $this->title;
                         'style' => 'width:100%;'
                     ]);
                 },
+                'contentOptions'=>['style'=>'max-width: 100px;']
             ],
 
 
 //            'id',
-            'user_id',
+            //  'user_id',
+            [
+                'label' => 'ID продавца',
+                'value' => function($data){
+                    return $data->user_id;
+                },
+                'contentOptions'=>['style'=>'max-width: 50px;']
+            ],
             'pr_name',
             'pr_sum',
             'pr_price',

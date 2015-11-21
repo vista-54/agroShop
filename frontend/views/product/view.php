@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::img($model->image,[
             'alt'=>'Изображение товара',
-            'style' => 'width:100%;'
+            'style' => 'width:150px;'
         ]);
 
         ?></h1>
